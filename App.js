@@ -293,58 +293,154 @@
 // });
 
 
+//-----------------------------------------------------------------------------
+// import * as React from 'react';
+// import { Text, View } from 'react-native';
+// import { Ionicons } from '@expo/vector-icons';
+// import { NavigationContainer } from '@react-navigation/native';
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+// import { SettingsScreen } from './screens/settings';
+
+// function HomeScreen() {
+//   return (
+//     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+//       <Text>Home!</Text>
+//     </View>
+//   );
+// }
+// // function SettingsScreen() {
+// //   return (
+// //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+// //       <Text>Settings!</Text>
+// //     </View>
+// //   );
+// // }
+
+
+// const Tab = createBottomTabNavigator();
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>
+//       <Tab.Navigator
+//         screenOptions={({ route }) => ({
+//           tabBarIcon: ({ focused, color, size }) => {
+//             if (route.name === 'Home') {
+//               return (
+//                 <Ionicons
+//                   name={
+//                     focused
+//                       ? 'ios-information-circle'
+//                       : 'ios-information-circle-outline'
+//                   }
+//                   size={size}
+//                   color={color}
+//                 />
+//               );
+//             } else if (route.name === 'Settings') {
+//               return (
+//                 <Ionicons
+//                   name={focused ? 'ios-list-box' : 'ios-list'}
+//                   size={size}
+//                   color={color}
+//                 />
+//               );
+//             }
+//           },
+//           tabBarInactiveTintColor: 'gray',
+//           tabBarActiveTintColor: 'tomato',
+//         })}
+//       >
+//         <Tab.Screen
+//           name="Home"
+//           component={HomeScreen}
+//           options={{ tabBarBadge: 3 }}
+//         />
+//         <Tab.Screen name="Settings" component={SettingsScreen} />
+//       </Tab.Navigator>
+//     </NavigationContainer>
+//   );
+// }
+
 import * as React from 'react';
-import { Text, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Button, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-function HomeScreen() {
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+//Tabs
+import {ProductosScreen} from './Screen/ProductosStackScreen'
+import {HomeScreen} from './Screen/HomeScreen'
+
+
+//Pantallas
+import {DetailsScreen} from './Pantallas/details'
+import {ClientesScreen} from './Pantallas/clientes'
+
+
+function SettingsScreen({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home!</Text>
+      <Text>Settings screen</Text>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate('Details')}
+      />
     </View>
   );
 }
 
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
+
+
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+
+
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
+    
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
 
-            if (route.name === 'Home') {
-              iconName = focused
-                ? 'ios-information-circle'
-                : 'ios-information-circle-outline';
-            } else if (route.name === 'Settings') {
-              iconName = focused ? 'ios-list-box' : 'ios-list';
-            }
+              if (route.name === 'Home') {
+                iconName = focused ? 'ios-add-circle' : 'ios-add-circle-outline';
+              } else if (route.name === 'Settings') {
+                iconName = focused ? 'ios-list-box' : 'ios-list';
+              }else if (route.name === 'Productos') {
+                iconName = focused ? 'ios-grid' : 'ios-grid-outline';
+              }
 
-            // You can return any component that you like here!
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: 'tomato',
-          tabBarInactiveTintColor: 'gray',
-        })}
-      >
-        <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-      </Tab.Navigator>
-    </NavigationContainer>
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+            headerStyle: {
+              backgroundColor: '#f4511e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: 'tomato',
+            inactiveTintColor: 'gray',
+          }}
+        >
+          
+
+          <Tab.Screen name="Home" component={HomeScreen} />
+          <Tab.Screen name="Settings" component={SettingsScreen} />
+          <Tab.Screen name="Productos" component={ClientesScreen} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    
   );
 }
 
-// export default App;
